@@ -12,40 +12,38 @@ import { TextField,
    InputLabel } from '@mui/material/';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
-import Member from "./Member";
 
 
 
 
-function Form({ setAppearance, initialTeam, currentTeam, setCurrentTeam, team, setTeam }) {
+
+function Form({ setAppearance, formDegerleriniAl }) {
  
 
   const depertment = ["Frontend Engineer", "Backend Engineer", "Data Scientist"]
 
-
+  const emptyForm = {
+    name: "",
+    surname:"",
+    email: "",
+    role: "",
+  };
   
   
-    const [age, setAge] = useState("")
+    const [formData, setformData] = useState(emptyForm)
 
-    const handleChange = (event ) => {
-      console.log(event)
-      setAge(event.target.value )
+   
+    const handleChange = (event) => {
+      setformData({
+        ...formData,
+        [event.target.name]: event.target.value,
+      });
     };
-
-    // const handleChange = (event) => {
-    //   setCurrentTeam({
-    //     ...currentTeam,
-    //     [event.target.name]: event.target.value,
-    //   });
-    // };
 
     const onSubmit = (event) => {
       event.preventDefault();
-
-      setTeam([...team, currentTeam]);
-      setCurrentTeam(initialTeam);
+      formDegerleriniAl(formData);
       setAppearance(true);
-
     };
 
     const Item = styled(Paper)(({ theme }) => ({
@@ -78,28 +76,37 @@ function Form({ setAppearance, initialTeam, currentTeam, setCurrentTeam, team, s
                     required
                     id="outlined-required"
                     label="name"
+                    name="name"
+                    value= {formData.name}
+                    onChange={(e)=>handleChange(e)}
                   />
                   <TextField
                     required
                     id="outlined-required"
                     label="surname"
+                    name="surname"
+                    value= {formData.surname}
+                    onChange={(e)=>handleChange(e)}
                   />
                   <TextField
                     id="outlined-email-input"
-                  
+                    name="email"
                     label="E-mail"
                     type="E-mail"
                     autoComplete="current-e-mail"
+                    value= {formData.email}
+                    onChange={(e)=>handleChange(e)}
                   />
                   
                   <FormControl sx={{ m: 2, minWidth: 200 }} size="small">
-                    <InputLabel id="demo-simple-select-label">Depertment</InputLabel>
+                    <InputLabel id="demo-simple-select-label" value= {formData.role} >Depertment</InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      
+                      name="role"
                       label="Depertment"
-                      onChange={handleChange}
+                      // onChange={handleChange} 
+                      onChange={(e)=>handleChange(e)}
                     >
                       <MenuItem value={"Frontend Engineer"} >Frontend Engineer</MenuItem>
                       <MenuItem value={"Backend Engineer"} >Backend Engineer</MenuItem>

@@ -4,18 +4,19 @@ import './App.css';
 import Form from './components/Form';
 import Member from './components/Member';
 
-const initialTeam = {
-  name: " ",
-  surname:" ",
-  email: " ",
-  role: " ",
-};
+const initialTeam = [{
+  name: "",
+  surname:"",
+  email: "",
+  role: "",
+}];
 
 function App() {
-  const [currentTeam, setCurrentTeam] = useState(initialTeam);
-  const [team, setTeam] = useState([]);
-  const [appearance, setAppearance] = useState(false);
-  
+  const [team, setTeam] = useState(initialTeam);
+  const [appearance, setAppearance] = useState(true);
+  function updateTeam(formValues) {
+    setTeam([...team, formValues])
+  }
   return (
     
     <div className="container">
@@ -23,18 +24,21 @@ function App() {
       <h1 className="title">Team Builder</h1>
     <Form 
     setAppearance={setAppearance}
-    initialTeam={initialTeam}
-    setTeam={setTeam}
-    team={team}
-    currentTeam={currentTeam}
-    setCurrentTeam={setCurrentTeam}/> 
+    formDegerleriniAl={updateTeam}
+    /> 
  
     {appearance && (
         <div className="member-container">
           <h1 className="team-title">Team Members:</h1>
-          {team.map((member,index) => {
-          
-            return (<Member key={index} member={member} />);
+          {team.map((member) => {
+            return <p> name:{member.name} 
+            surname: {member.surname} 
+            email: {member.email} 
+            role: {member.role} </p>
+              
+              
+              
+           
           })}
     </div>
     )}
